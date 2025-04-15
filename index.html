@@ -86,6 +86,114 @@
       <button onclick="calculateDecrease()">Calculer</button>
       <div class="result" id="decreaseResult"></div>
     </div>
+    <!-- Ajoute ce code HTML à la suite de ton dernier bloc -->
+
+    <div class="card">
+      <h2>4️⃣ Prix d'achat net HT</h2>
+      <label>Prix d’achat brut HT :</label>
+      <input type="number" id="brutPrice" placeholder="Ex: 7900" />
+      <label>Remise (%) :</label>
+      <input type="number" id="discountRate" placeholder="Ex: 3" />
+      <button onclick="calculateNetPurchase()">Calculer</button>
+      <div class="result" id="netPurchaseResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>5️⃣ Coût d'achat</h2>
+      <label>Prix d'achat net HT :</label>
+      <input type="number" id="netPrice" placeholder="Ex: 7663" />
+      <label>Frais d’achat (%) :</label>
+      <input type="number" id="supplyFees" placeholder="Ex: 6" />
+      <button onclick="calculatePurchaseCost()">Calculer</button>
+      <div class="result" id="purchaseCostResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>6️⃣ Prix de vente HT</h2>
+      <label>Coût d’achat :</label>
+      <input type="number" id="costPrice" placeholder="Ex: 8123" />
+      <label>Coefficient multiplicateur :</label>
+      <input type="number" id="saleCoefficient" placeholder="Ex: 1.78" />
+      <button onclick="calculateHTSale()">Calculer</button>
+      <div class="result" id="htSaleResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>7️⃣ Prix de vente TTC</h2>
+      <label>Prix de vente HT :</label>
+      <input type="number" id="htPrice" placeholder="Ex: 14459.94" />
+      <label>TVA (%) :</label>
+      <input type="number" id="vatRate" placeholder="Ex: 20" />
+      <button onclick="calculateTTC()">Calculer</button>
+      <div class="result" id="ttcResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>8️⃣ Marge brute</h2>
+      <label>Prix de vente HT :</label>
+      <input type="number" id="htSale" placeholder="Ex: 14459.94" />
+      <label>Coût d’achat :</label>
+      <input type="number" id="buyCost" placeholder="Ex: 8123" />
+      <button onclick="calculateMargin()">Calculer</button>
+      <div class="result" id="marginResult"></div>
+    </div>
+
+    <script>
+      function calculateNetPurchase() {
+        const brut = parseFloat(document.getElementById("brutPrice").value);
+        const discount = parseFloat(
+          document.getElementById("discountRate").value
+        );
+        if (!brut || !discount) return;
+        const discountAmount = brut * (discount / 100);
+        const netPrice = (brut - discountAmount).toFixed(2);
+        document.getElementById(
+          "netPurchaseResult"
+        ).innerText = `✅ Prix d’achat net HT : ${netPrice} F`;
+      }
+
+      function calculatePurchaseCost() {
+        const net = parseFloat(document.getElementById("netPrice").value);
+        const fees = parseFloat(document.getElementById("supplyFees").value);
+        if (!net || !fees) return;
+        const cost = (net * (1 + fees / 100)).toFixed(2);
+        document.getElementById(
+          "purchaseCostResult"
+        ).innerText = `📦 Coût d'achat : ${cost} F`;
+      }
+
+      function calculateHTSale() {
+        const cost = parseFloat(document.getElementById("costPrice").value);
+        const coef = parseFloat(
+          document.getElementById("saleCoefficient").value
+        );
+        if (!cost || !coef) return;
+        const price = (cost * coef).toFixed(2);
+        document.getElementById(
+          "htSaleResult"
+        ).innerText = `💰 Prix de vente HT : ${price} F`;
+      }
+
+      function calculateTTC() {
+        const ht = parseFloat(document.getElementById("htPrice").value);
+        const tva = parseFloat(document.getElementById("vatRate").value);
+        if (!ht || !tva) return;
+        const ttc = (ht * (1 + tva / 100)).toFixed(2);
+        document.getElementById(
+          "ttcResult"
+        ).innerText = `💡 Prix de vente TTC : ${ttc} F`;
+      }
+
+      function calculateMargin() {
+        const ht = parseFloat(document.getElementById("htSale").value);
+        const cost = parseFloat(document.getElementById("buyCost").value);
+        if (!ht || !cost) return;
+        const margin = (ht - cost).toFixed(2);
+        document.getElementById(
+          "marginResult"
+        ).innerText = `📈 Marge brute : ${margin} F`;
+      }
+    </script>
 
     <script>
       function calculateEvolution() {
